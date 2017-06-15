@@ -1,0 +1,9 @@
+*~
+*.pyc
+*.swp
+*#
+.metadata
+*.log
+venv
+settings.py
+__pycache__
