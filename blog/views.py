@@ -22,6 +22,7 @@ def admin():
     else:
         abort(403)
 
+
 @app.route('/setup', methods=('GET', 'POST'))
 def setup():
     form = SetupForm()
