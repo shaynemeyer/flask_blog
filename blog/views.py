@@ -50,5 +50,5 @@ def setup():
             db.session.rollback()
             error = "Error creating blog"
         flash("Blog created")
-        return redirect(url_for('/admin'))
+        return redirect(url_for('admin'))
     return render_template('/blog/setup.html', form=form)
