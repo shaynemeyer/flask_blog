@@ -5,6 +5,7 @@ from author.models import Author
 from author.decorators import login_required
 import bcrypt
 
+
 @app.route('/login', methods=('GET', 'POST'))
 def login():
     form = LoginForm()
@@ -27,7 +28,7 @@ def login():
                     session.pop('next')
                     return redirect(next)
                 else:
-                    return redirect(url_for('login_success'))
+                    return redirect(url_for('index'))
             else:
                 error = "Incorrect username and password!"
         else:
@@ -48,12 +49,8 @@ def success():
     return "Author registered!"
 
 
-@app.route('/login_success')
-def login_success():
-    return "Author logged in!"
-
-
 @app.route('/logout')
 def logout():
     session.pop('username')
+    session.pop('is_author')
     return redirect(url_for('index'))
