@@ -62,3 +62,10 @@ def setup():
 def post():
     return 'Blog Post'
 
+
+@app.route('/article')
+def article():
+    return render_template('blog/article.html')
+
+
+

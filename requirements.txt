@@ -5,5 +5,5 @@ flask-script
 flask-wtf
 flask-migrate
 py-bcrypt
-python=slugify
+python-slugify
 flask-markdown
