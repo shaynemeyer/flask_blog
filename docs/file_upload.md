@@ -4,6 +4,6 @@
 Add these constants to your settings.py file
 
 ```bash
-UPLOAD_IMAGES_DEST = '~/udemy/pro-python-web/flask_blog/static/images'
-UPLOAD_IMAGES_URL = '/static/images'
+UPLOADED_IMAGES_DEST = '~/udemy/pro-python-web/flask_blog/static/images'
+UPLOADED_IMAGES_URL = '/static/images'
 ```
