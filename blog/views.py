@@ -1,6 +1,6 @@
 from flask_blog import app
 from flask import render_template, redirect, flash, url_for, session, abort
-from blog.form import SetupForm
+from blog.form import SetupForm, PostForm
 from flask_blog import db
 from author.models import Author
 from blog.models import Blog
@@ -57,10 +57,11 @@ def setup():
     return render_template('/blog/setup.html', form=form)
 
 
-@app.route('/post')
+@app.route('/post', methods=('GET', 'POST'))
 @author_required
 def post():
-    return 'Blog Post'
+    form = PostForm()
+    return render_template('blog/post.html', form=form)
 
 
 @app.route('/article')

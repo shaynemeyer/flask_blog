@@ -53,4 +53,5 @@ class Category(db.Model):
         self.name = name
 
     def __repr__(self):
-        return '<Category %r>' % self.name
+        # return '<Category %r>' % self.name
+        return self.name
