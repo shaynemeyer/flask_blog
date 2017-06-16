@@ -76,6 +76,7 @@ def post():
         blog = Blog.query.first()
         author = Author.query.filter_by(username=session['username']).first()
         title = form.title.data
+        body = form.body.data
         slug = slugify(title)
         post = Post(blog, author, title, body, category, slug)
         db.session.add(post)
