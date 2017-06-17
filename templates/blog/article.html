@@ -13,9 +13,12 @@
         
         <h3>{{ post.title }}</h3>
 
-        {% if session.get(%}
+        {% if session.get('is_author'}
 
-        %{}
+        <a href="{{ urlfor('edit', post_id.post.id}}">Edit</a>
+        <a href="{{ urlfor('delete', post_id.post.id}}">Delete</a>
+
+        {% endif %}
         {{ post.body|markdown }}
 
         <hr>
