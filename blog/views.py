@@ -16,8 +16,6 @@ POSTS_PER_PAGE = 5
 @app.route('/index/<int:page>')
 def index(page=1):
     blog = Blog.query.first()
-    if not blog:
-        return redirect(url_for('setup'))
     posts = Post.query.filter_by(live=True).order_by(Post.publish_date.desc()).paginate(page, POSTS_PER_PAGE, False)
     return render_template('blog/index.html', blog=blog, posts=posts)
 
@@ -35,8 +33,11 @@ def admin(page=1):
 
 @app.route('/setup', methods=('GET', 'POST'))
 def setup():
+    blogs = Blog.query.count()
+    if blogs:
+        return redirect(url_for('admin'))
+
     form = SetupForm()
-    error = ''
 
     if form.validate_on_submit():
         salt = bcrypt.gensalt()
@@ -59,12 +60,13 @@ def setup():
             error = "Error creating user"
         if author.id and blog.id:
             db.session.commit()
+            flash("Blog created")
+            return redirect(url_for('index'))
         else:
             db.session.rollback()
             error = "Error creating blog"
-        flash("Blog created")
-        return redirect(url_for('admin'))
-    return render_template('/blog/setup.html', form=form)
+
+    return render_template('blog/setup.html', form=form)
 
 
 @app.route('/post', methods=('GET', 'POST'))
