@@ -16,6 +16,7 @@ class Author(db.Model):
         self.email = email
         self.username = username
         self.password = password
+        self.is_author = is_author
 
     def __repr__(self):
         return '<Author %r>' % self.username

@@ -44,7 +44,7 @@ class UserTest(unittest.TestCase):
             name='My test blog',
             fullname='Average Joe',
             email='me@averagejoes.com',
-            username='joe',
+            username='joetest',
             password='test',
             confirm='test'
             ), follow_redirects=True)
@@ -60,16 +60,15 @@ class UserTest(unittest.TestCase):
 
     def test_create_blog(self):
         rv = self.create_blog()
-        print(rv.data)
         assert 'Blog created' in str(rv.data)
 
     def test_login_logout(self):
         self.create_blog()
-        rv = self.login('joe', 'test')
-        assert 'User joe logged in' in str(rv.data)
+        rv = self.login('joetest', 'test')
+        assert 'User joetest logged in' in str(rv.data)
         rv = self.logout()
         assert 'User logged out' in str(rv.data)
-        rv = self.login('joe', 'test')
+        rv = self.login('joetest', 'test')
         assert 'Incorrect username and password'
 
 if __name__ == '__main__':

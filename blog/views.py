@@ -22,13 +22,11 @@ def index(page=1):
 
 @app.route('/admin')
 @app.route('/admin/<int:page>')
+@login_required
 @author_required
 def admin(page=1):
-    if session.get('is_author'):
-        posts = Post.query.order_by(Post.publish_date.desc()).paginate(page, POSTS_PER_PAGE, False)
-        return render_template('blog/admin.html', posts=posts)
-    else:
-        abort(403)
+    posts = Post.query.order_by(Post.publish_date.desc()).paginate(page, POSTS_PER_PAGE, False)
+    return render_template('blog/admin.html', posts=posts)
 
 
 @app.route('/setup', methods=('GET', 'POST'))
@@ -58,14 +56,14 @@ def setup():
         else:
             db.session.rollback()
             error = "Error creating user"
+
         if author.id and blog.id:
             db.session.commit()
-            flash("Blog created")
-            return redirect(url_for('index'))
         else:
             db.session.rollback()
             error = "Error creating blog"
-
+        flash("Blog created")
+        return redirect('/index')
     return render_template('blog/setup.html', form=form)
 
 
