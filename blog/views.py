@@ -83,11 +83,9 @@ def post():
             db.session.add(new_category)
             db.session.flush()
             category = new_category
-        elif form.category.data:
-            category_id = form.category.get_pk(form.category.data)
-            category = Category.query.filter_by(id=category_id).first()
         else:
-            category = None
+            category = form.category.data
+
         blog = Blog.query.first()
         author = Author.query.filter_by(username=session['username']).first()
         title = form.title.data
@@ -97,7 +95,7 @@ def post():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('article', slug=slug))
-    return render_template('blog/post.html', form=form)
+    return render_template('blog/post.html', form=form, action="new")
 
 
 @app.route('/article/<slug>')
@@ -111,6 +109,27 @@ def article(slug):
 def edit(post_id):
     post = Post.query.filter_by(id=post_id).first_or_404()
     form = PostForm(obj=post)
+    if form.validate_on_submit():
+        original_image = post.image
+        form.populate_obj(post)
+        if form.image.has_file():
+            image = request.files.get('image')
+            try:
+                filename = upload_images.save(image)
+            except:
+                flash("The image was not uploaded")
+            if filename:
+                post.image = filename
+        else:
+            post.image = original_image
+
+        if form.new_category.data:
+            new_category = Category(form.new_category.data)
+            db.session.add(new_category)
+            db.session.flush()
+            post.category = new_category
+        db.session.commit()
+        return redirect(url_for('article', slug=post.slug))
     return render_template('blog/post.html', form=form, post=post, action="edit")
 
 

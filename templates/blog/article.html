@@ -8,15 +8,15 @@
     <div class="col-offset-3 col-md-6">
         
         {% if post.image %}
-        <img src="{{ post.imgsrc}}" height="300px" class="img-rounded" alt="">
+        <img src="{{ post.imgsrc }}" height="300px" class="img-rounded" alt="">
         {% endif %}
         
         <h3>{{ post.title }}</h3>
 
-        {% if session.get('is_author'}
+        {% if session.get('is_author') %}
 
-        <a href="{{ urlfor('edit', post_id.post.id}}">Edit</a>
-        <a href="{{ urlfor('delete', post_id.post.id}}">Delete</a>
+        <a href="{{ url_for('edit', post_id=post.id) }}">Edit</a>
+        <a href="{{ url_for('delete', post_id=post.id) }}">Delete</a>
 
         {% endif %}
         {{ post.body|markdown }}
