@@ -67,6 +67,10 @@ class UserTest(unittest.TestCase):
         self.create_blog()
         rv = self.login('joe', 'test')
         assert 'User joe logged in' in str(rv.data)
+        rv = self.logout()
+        assert 'User logged out' in str(rv.data)
+        rv = self.login('joe', 'test')
+        assert 'Incorrect username and password'
 
 if __name__ == '__main__':
     unittest.main()
