@@ -9,8 +9,12 @@
 
         {% include '_flashmessages.html' %}
 
+        <div class="pull-right">
+            <a href="{{ url_for('post') }}"><i class="fa fa-plus" aria-hidden="true"></i> Add post</a>
+        </div>
+
         <h1><a href="{{ url_for('index') }}">{{ blog.name }}</a></h1>
-        
+
         <div class="post-list">
             {% for post in posts.items %}
             <div class="post-item">
